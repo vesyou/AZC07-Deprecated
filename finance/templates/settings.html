@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Settings
+{% endblock %}
+
+{% block main %}
+    <form action="/settings" method="post">
+
+
+
+
+<!-- WIP, change submit buttons-->
+        <div class="mb-3">
+            <input auto-complete="off" autofocus class="form-control mx-auto w-auto" id="money" name="money" placeholder="Add more money" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <div class="mb-3">
+            <input auto-complete="off" autofocus class="form-control mx-auto w-auto" id="pw1" name="pw1" placeholder="Change password" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <div class="mb-3">
+            <input auto-complete="off" autofocus class="form-control mx-auto w-auto" id="pw2" name="pw2" placeholder="Confirm password" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form>
+{% endblock %}

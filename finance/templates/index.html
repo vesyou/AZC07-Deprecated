@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+    <!-- https://www.w3schools.com/html/html_tables.asp https://getbootstrap.com/docs/4.0/content/tables/ -->
+    <div>
+        <table class="table table-bordered">
+            <tr>
+                <th scope="col">Current cash balance</th>
+                <td>{{ money }}</td>
+            </tr>
+            <tr>
+                <th scope="col">Total value (Cash + Stock value)</th>
+                <td>{{ total_value }}</td>
+            </tr>
+        </table>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Symbol</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Number of shares owned</th>
+                <th scope="col">Current price (per share)</th>
+                <th scope="col">Total value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in portfolio %}
+                <tr>
+                    <th scope="row">{{ row['symbol'] }}</td>
+                    <td>{{ row['name'] }}</td>
+                    <td>{{ row['shares'] }}</td>
+                    <td>{{ "$%.2f"|format(row['price']) }}</td>
+                    <!-- https://support.sendwithus.com/jinja/formatting_numbers/ -->
+                    <td>{{ "$%.2f"|format(row['shares'] * row['price']) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

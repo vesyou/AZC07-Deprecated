@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <!-- https://www.w3schools.com/html/html_tables.asp https://getbootstrap.com/docs/4.0/content/tables/ -->
+    <div class="alert alert-primary" role="alert">
+        Purchases of shares are reflected with 'Purchase time' whereas sales of shares will have a 'Sale time'
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Symbol</th>
+                <th scope="col">Number of shares purchased/sold</th>
+                <th scope="col">Purchase/sale price</th>
+                <th scope="col">Purchase time</th>
+                <th scope="col">Sale time</th>
+                <th scope="col">Purchase or Sale</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in transactions %}
+                <tr>
+                    <th scope="row">{{ row['symbol'] }}</td>
+                    <td>{{ row['shares'] }}</td>
+                    <td>{{ "$%.2f"|format(row['price']) }}</td>
+                    <!-- https://stackoverflow.com/questions/19614027/jinja2-template-variable-if-none-object-set-a-default-value -->
+                    <td>{{ row['purchase_date'] if row['purchase_date'] is not none }}</td>
+                    <td>{{ row['sale_date'] if row['sale_date'] is not none }}</td>
+                    <td>{{ row['buy_sell'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

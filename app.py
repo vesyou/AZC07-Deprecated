@@ -15,7 +15,7 @@ app.secret_key = 'very_secret_key'
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Initialised messages variable, which is a list of dictionaries. Each dictionary is a message with two key value pairs - 'role' and 'content'.
-messages = [{"role": "system", "content": "In a world where cats have evolved into intelligent, bipedal creatures, you are a human who has been shrunk down to their size and must navigate their society to find a way back to your own world. Along the way, you’ll have to avoid being adopted as a pet, navigate political intrigue among the feline factions, and uncover the dark secret behind the feline’s rapid evolution."}]
+messages = [{"role": "system", "content": "I want you to act as if you are a classic text adventure game and we are playing. I don’t want you to ever break out of your character, and you must not refer to yourself in any way. If I want to give you instructions outside the context of the game, I will use curly brackets {like this} but otherwise you are to stick to being the text adventure program. In this game, the setting is a dark forest. Each room should have at least 3 sentence descriptions. Once I say 'begin', start by displaying the first room at the beginning of the game, and wait for me to give you my first command."}]
 
 # Obtain user input, interact with API and return result.
 @app.route('/', methods=['GET', 'POST'])

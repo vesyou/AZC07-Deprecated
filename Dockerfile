@@ -11,7 +11,7 @@ COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose the port that the Flask application is listening on
-EXPOSE 5000
+# EXPOSE 5000
 
 # Set the entrypoint command to run the application
-CMD ["flask", "run", "--host=0.0.0.0"]
+# CMD ["flask", "run", "--host=0.0.0.0"]

@@ -8,6 +8,8 @@ WORKDIR /app
 COPY . .
 
 # Install dependencies
+RUN sudo apt-get update
+RUN sudo apt install git-all
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose the port that the Flask application is listening on

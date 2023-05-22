@@ -5,7 +5,7 @@ Intend to create template website for the project using Flask, with a Jinja2 tem
 
 Added Dockerfile and compose-dev.yaml for Docker Dev Environments.
 
-Installing Docker Desktop: https://docs.docker.com/desktop/install/linux-install/
+Install Docker Desktop: https://docs.docker.com/desktop/install/linux-install/
 
 Docker Dev Environment (once Docker Desktop is installed): https://open.docker.com/dashboard/dev-envs?url=git@github.com:vesyou/AZC07-Project-Files.git
 

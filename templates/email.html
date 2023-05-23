@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Email Helper (wt)
+{% endblock %}
+
+{% block navbar %}
+    <!-- Ensure current page is highlighted by adding <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" -->
+    <!-- href currently left mostly placeholder, make sure to update! -->    
+    <nav class="nav nav-masthead justify-content-center float-md-end">
+        <a class="nav-link fw-bold py-1 px-0" href="/">Home</a>
+        <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="/email">Email Helper (wt)</a>
+        <a class="nav-link fw-bold py-1 px-0" href="#">Apology Generator (wt)</a>
+    </nav>
+{% endblock %}
+
+{% block main %}
+    
+  <!-- Add box to display message -->
+  <div class="card text-start">
+    <div class="card-header" style="background-color: #E9ECEF;">
+      Message
+    </div>
+    <div class="card-body">
+      {% if reply is defined %}
+        <p class="card-text">{{ reply }}</p>
+      {% else %}
+        <p class="card-text">Welcome to The Dark Forest, please say 'begin' to start the game!</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Add box to submit response -->
+  <form action="/email" method="post">
+    <div class="input-group my-5">
+      <span class="input-group-text" style="background-color: #E9ECEF;">Your response</span>
+      <textarea class="form-control" name="input" aria-label="With textarea"></textarea>   
+      <button class="btn btn-success d-flex align-items-center" type="submit">Submit</button>
+    </div>
+  </form>
+
+  <!-- Export and clear history function -->
+  <div>
+    <a href="/download" class="btn btn-outline-info mb-5">Export</a>
+    <a href="/clear" class="btn btn-outline-danger mb-5">Clear History</a>
+  </div>
+
+  <!-- Add infocard about interface, links to doc -->
+  <div class="px-3 mt-5">
+    <h1>Powered by ChatGPT 3.5</h1>
+    <p class="lead">This is a simple interface which starts by providing a set prompt to ChatGPT to establish the game. The player can then interact with this game as they would with ChatGPT normally.</p>
+    <p class="lead">Built with Flask, Bootstrap and Python</p>
+    <p class="lead">
+      <a href="https://platform.openai.com/docs/api-reference/chat" target="_blank" class="btn btn-lg btn-light fw-bold border-white bg-white">OpenAI API</a>
+      <a href="https://flask.palletsprojects.com/en/2.2.x/" target="_blank" class="btn btn-lg btn-light fw-bold border-white bg-white">Flask</a>
+      <a href="https://getbootstrap.com/docs/5.3/examples/" target="_blank" class="btn btn-lg btn-light fw-bold border-white bg-white">Bootstrap</a>
+      <a href="https://docs.python.org/3/" target="_blank" class="btn btn-lg btn-light fw-bold border-white bg-white">Python</a>
+    </p>
+  </div>
+
+{% endblock %}

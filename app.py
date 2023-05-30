@@ -1,3 +1,4 @@
+# NOTE: Moved all the previous and WIP code to reference_code.py
 # OpenAI API integration code https://www.youtube.com/watch?v=pGOyw_M1mNE
 # Flask code from CS50 project and DigitalOcean
 import openai
@@ -14,138 +15,53 @@ app.secret_key = 'very_secret_key'
 # Ensure templates are auto-reloaded when modified
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-# NOTE: Need to find an alternative to initialising the messages variable globally, as this will prevent other routes with different prompts from being created - looking into Flask session objects for solution.
-# Initialised messages variable, which is a list of dictionaries. Each dictionary is a message with two key value pairs - 'role' and 'content'.
-messages = [{"role": "system", "content": "I want you to act as if you are a classic text adventure game and we are playing. I don’t want you to ever break out of your character, and you must not refer to yourself in any way. If I want to give you instructions outside the context of the game, I will use curly brackets {like this} but otherwise you are to stick to being the text adventure program. In this game, the setting is a dark forest. Each room should have at least 3 sentence descriptions. Once I say 'begin', start by displaying the first room at the beginning of the game, and wait for me to give you my first command."}]
+# Initialised messages variable, which is a list of dictionaries. Each dictionary is a message with two key value pairs - 'role' and 'content'
+# Currently using different variables for each app, but in the future should look into other methods like flask sessions to store data instead
+# TODO: Update prompts
+summariser_msg = [{"role": "system", "content": "Summarise the text I'm providing"}]
+
+keyword_msg = [{"role": "system", "content": "Select keywords from the text I'm providing"}]
 
 # Homepage: Explanation of the project
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
     return render_template('index.html')
 
-# Example email route
-@app.route('/email', methods=['GET', 'POST'])
-def email():
+# Summariser route
+@app.route('/summary', methods=['GET', 'POST'])
+def summary():
 
     if request.method == 'POST':
         message = request.form['input']
-        messages.append({"role": "user", "content": message})
-        response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
+        summariser_msg.append({"role": "user", "content": message})
+        response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=summariser_msg)
         reply = response["choices"][0]["message"]["content"]
-        messages.append({"role": "assistant", "content": reply})
-        return render_template('email.html', reply=reply)
+        summariser_msg.append({"role": "assistant", "content": reply})
+        return render_template('summary.html', reply=reply)
     else:
-        return render_template('email.html')
+        return render_template('summary.html')
+    
+# TODO: Example keyword route
+@app.route('/keyword', methods=['GET', 'POST'])
+def keyword():
+
+    if request.method == 'POST':
+        message = request.form['input']
+        keyword_msg.append({"role": "user", "content": message})
+        response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=keyword_msg)
+        reply = response["choices"][0]["message"]["content"]
+        keyword_msg.append({"role": "assistant", "content": reply})
+        return render_template('keyword.html', reply=reply)
+    else:
+        return render_template('keyword.html')
 
 # Route to write the conversation into messages.txt and provide to user as download
+# TODO: Review function and variable names to adjust for multiple apps - currently only works with summariser
 @app.route('/download')
 def download():
     with open('messages.txt', 'w') as f:
-        for message in messages:
+        for message in summariser_msg:
             f.write(f"{message['role']}: {message['content']}\n")
             f.write("---\n")
     path = "messages.txt"
     return send_file(path, as_attachment=True)
-
-# Route to clear history and reset to default
-@app.route('/clear')
-def clear():
-    # Keyword 'global' to indicate that I want to use the global variable rather than create a new local variable with the same name
-    global messages
-
-    # Reset to default
-    messages = [{"role": "system", "content": "I want you to act as if you are a classic text adventure game and we are playing. I don’t want you to ever break out of your character, and you must not refer to yourself in any way. If I want to give you instructions outside the context of the game, I will use curly brackets {like this} but otherwise you are to stick to being the text adventure program. In this game, the setting is a dark forest. Each room should have at least 3 sentence descriptions. Once I say 'begin', start by displaying the first room at the beginning of the game, and wait for me to give you my first command."}]
-
-    # Delete messages.txt, flash confirmation then return
-    if os.path.exists('messages.txt'):
-        os.remove('messages.txt')   
-        flash('History cleared', 'success')
-    else:
-        flash('History already cleared', 'error')
-    return redirect('/email')
-
-
-
-
-
-
-
-
-
-
-"""
-
-# Homepage: Explanation of project
-@app.route('/', methods=['GET', 'POST'])
-def homepage():
-    return render_template('index.html')
-
-
-# NOTE: Need to find an alternative to init the messages variable globally, as this will prevent other routes with different prompts from being creates - looking into Flask session objects for solution
-# Initialised messages variable, which is a list of dictionaries. Each dictionary is a message with two key value pairs - 'role' and 'content'.
-messages = [{"role": "system", "content": "I want you to act as if you are a classic text adventure game and we are playing. I don’t want you to ever break out of your character, and you must not refer to yourself in any way. If I want to give you instructions outside the context of the game, I will use curly brackets {like this} but otherwise you are to stick to being the text adventure program. In this game, the setting is a dark forest. Each room should have at least 3 sentence descriptions. Once I say 'begin', start by displaying the first room at the beginning of the game, and wait for me to give you my first command."}]
-
-# Email Helper ...
-@app.route('/email', methods=['GET', 'POST'])
-def email():
-
-    if request.method == 'POST':
-        message = request.form['input']
-        messages.append({"role": "user", "content": message})
-        response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
-        reply = response["choices"][0]["message"]["content"]
-        messages.append({"role": "assistant", "content": reply})
-        return render_template('email.html', reply=reply)
-    else:
-        return render_template('email.html')
-
-"""
-#
-"""
-# Code from previous project for reference
-
-# Initialised messages variable, which is a list of dictionaries. Each dictionary is a message with two key value pairs - 'role' and 'content'.
-messages = [{"role": "system", "content": "I want you to act as if you are a classic text adventure game and we are playing. I don’t want you to ever break out of your character, and you must not refer to yourself in any way. If I want to give you instructions outside the context of the game, I will use curly brackets {like this} but otherwise you are to stick to being the text adventure program. In this game, the setting is a dark forest. Each room should have at least 3 sentence descriptions. Once I say 'begin', start by displaying the first room at the beginning of the game, and wait for me to give you my first command."}]
-
-# Obtain user input, interact with API and return result.
-@app.route('/', methods=['GET', 'POST'])
-def index():
-
-    if request.method == 'POST':
-        message = request.form['input']
-        messages.append({"role": "user", "content": message})
-        response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=messages)
-        reply = response["choices"][0]["message"]["content"]
-        messages.append({"role": "assistant", "content": reply})
-        return render_template('index.html', reply=reply)
-    else:
-        return render_template('index.html')
-
-# Route to write the conversation into messages.txt and provide to user as download
-@app.route('/download')
-def download():
-    with open('messages.txt', 'w') as f:
-        for message in messages:
-            f.write(f"{message['role']}: {message['content']}\n")
-            f.write("---\n")
-    path = "messages.txt"
-    return send_file(path, as_attachment=True)
-
-# Route to clear history and reset to default
-@app.route('/clear')
-def clear():
-    # Keyword 'global' to indicate that I want to use the global variable rather than create a new local variable with the same name
-    global messages
-
-    # Reset to default
-    messages = [{"role": "system", "content": "I want you to act as if you are a classic text adventure game and we are playing. I don’t want you to ever break out of your character, and you must not refer to yourself in any way. If I want to give you instructions outside the context of the game, I will use curly brackets {like this} but otherwise you are to stick to being the text adventure program. In this game, the setting is a dark forest. Each room should have at least 3 sentence descriptions. Once I say 'begin', start by displaying the first room at the beginning of the game, and wait for me to give you my first command."}]
-
-    # Delete messages.txt, flash confirmation then return
-    if os.path.exists('messages.txt'):
-        os.remove('messages.txt')   
-        flash('History cleared', 'success')
-    else:
-        flash('History already cleared', 'error')
-    return redirect('/')
-
-"""

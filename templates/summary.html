@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Email Helper (wt)
+    Summariser (wt)
 {% endblock %}
 
 {% block navbar %}
@@ -9,7 +9,7 @@
     <!-- href currently left mostly placeholder, make sure to update! -->    
     <nav class="nav nav-masthead justify-content-center float-md-end">
         <a class="nav-link fw-bold py-1 px-0" href="/">Home</a>
-        <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="/email">Email Helper (wt)</a>
+        <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="/summary">Summariser (wt)</a>
         <a class="nav-link fw-bold py-1 px-0" href="#">Apology Generator (wt)</a>
     </nav>
 {% endblock %}
@@ -25,13 +25,13 @@
       {% if reply is defined %}
         <p class="card-text">{{ reply }}</p>
       {% else %}
-        <p class="card-text">Welcome to The Dark Forest, please say 'begin' to start the game!</p>
+        <p class="card-text">TESTING: Enter text to summarise</p>
       {% endif %}
     </div>
   </div>
 
   <!-- Add box to submit response -->
-  <form action="/email" method="post">
+  <form action="/summary" method="post">
     <div class="input-group my-5">
       <span class="input-group-text" style="background-color: #E9ECEF;">Your response</span>
       <textarea class="form-control" name="input" aria-label="With textarea"></textarea>   

@@ -57,7 +57,11 @@ def keyword():
         return render_template('keyword.html')
 
 # Route to write the conversation into messages.txt and provide to user as download
-# TODO: Review function and variable names to adjust for multiple apps - currently only works with summariser
-@app.route('/download')
-def download():
+# Rewrote so it calls the download_route function and passes it the relevant variable depending on the app TODO: HTML will need to be edited to reflect routing
+@app.route('/download/summary')
+def download_summary():
     return download_route(summariser_msg)
+
+@app.route('/download/keyword')
+def download_keywords():
+    return download_route(keyword_msg)

@@ -26,7 +26,7 @@ keyword_msg = [{"role": "system", "content": "Select keywords from the text I'm 
 # Homepage: Explanation of the project
 @app.route('/', methods=['GET', 'POST'])
 def homepage():
-    return render_template('index.html')
+    return render_template('home.html')
 
 # Summariser route
 @app.route('/summary', methods=['GET', 'POST'])
@@ -43,7 +43,7 @@ def summary():
         return render_template('summary.html')
     
 # TODO: Example keyword route
-@app.route('/keyword', methods=['GET', 'POST'])
+@app.route('/keywords', methods=['GET', 'POST'])
 def keyword():
 
     if request.method == 'POST':
@@ -65,3 +65,7 @@ def download_summary():
 @app.route('/download/keyword')
 def download_keywords():
     return download_route(keyword_msg)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+

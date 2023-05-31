@@ -1,7 +1,0 @@
-system: Summarise the text I'm providing
----
-user: Self care activities can range from physical activities such as exercising and eating healthy, to mental activities such as reading a book or practicing mindfulness, to spiritual or social activities such as praying or catching lunch with a friend. The important thing to remember about self-care is that it is about listening to what your mind and body need.
-Implementing a regular self-care strategy has been shown to be effective in creating a greater sense of connection to the outside world. It’s also helpful in managing the stress and anxiety you may experience in your everyday life.
----
-assistant: Self-care includes physical, mental, spiritual, or social activities that help individuals listen to their mind and body needs. Regular self-care can enhance connections with the outside world and manage stress and anxiety.
----

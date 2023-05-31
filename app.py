@@ -4,6 +4,7 @@
 import openai
 from flask import Flask, flash, redirect, render_template, request, send_file
 import os
+from download_route import download_route
 
 # API key 
 openai.api_key = "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"
@@ -59,9 +60,4 @@ def keyword():
 # TODO: Review function and variable names to adjust for multiple apps - currently only works with summariser
 @app.route('/download')
 def download():
-    with open('messages.txt', 'w') as f:
-        for message in summariser_msg:
-            f.write(f"{message['role']}: {message['content']}\n")
-            f.write("---\n")
-    path = "messages.txt"
-    return send_file(path, as_attachment=True)
+    return download_route(summariser_msg)

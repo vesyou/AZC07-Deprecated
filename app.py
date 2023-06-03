@@ -56,8 +56,7 @@ def keyword():
     else:
         return render_template('keyword.html')
 
-# Route to write the conversation into messages.txt and provide to user as download
-# Rewrote so it calls the download_route function and passes it the relevant variable depending on the app TODO: HTML will need to be edited to reflect routing
+# Testing pull requests
 @app.route('/download/summary')
 def download_summary():
     return download_route(summariser_msg)

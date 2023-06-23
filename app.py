@@ -1,4 +1,4 @@
-# NOTE: Moved all the previous and WIP code to reference_code.py
+# NOTE: DEPRECATED
 # OpenAI API integration code https://www.youtube.com/watch?v=pGOyw_M1mNE
 # Flask code from CS50 project and DigitalOcean
 import openai
@@ -6,8 +6,8 @@ from flask import Flask, flash, redirect, render_template, request, send_file
 import os
 from download_route import download_route
 
-# API key 
-openai.api_key = "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"
+# API key https://platform.openai.com/account/api-keys
+openai.api_key = "[Your OpenAI Key Here]"
 
 # Configure application
 app = Flask(__name__)
